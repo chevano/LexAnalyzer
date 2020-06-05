@@ -1,0 +1,211 @@
+
+<!-- saved from url=(0049)http://picasso.cs.qc.cuny.edu/cs316/316proj1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>
+CS 316 Project 1
+</title>
+
+</head><body>
+<b>
+CS 316 &nbsp;&nbsp; Spring 2020
+</b>
+
+<br>
+Observe
+<a href="http://picasso.cs.qc.cuny.edu/cs316/CoursePolicies.html"><b>course policies</b></a>
+in undertaking this project.
+<br>
+All programs must be written in Oracle Standard Edition compliant Java or ISO/ANSI standard compliant C++.
+
+<hr align="center">
+
+<b>
+PROJECT 1: Lexical Analyzer
+<br>
+Due: 03/06/20, Friday, 11 PM
+<br>
+Late projects will not be accepted.
+</b>
+
+<br><br>
+
+Consider the following EBNF defining 18 token categories ⟨id⟩ through ⟨RBrace⟩:
+
+<br><br>
+ ⟨letter⟩ → a | b | ... | z | A | B | ... | Z
+<br>
+ ⟨digit⟩ → 0 | 1 | ... | 9
+<br>
+ ⟨id⟩ → ⟨letter⟩ {⟨letter⟩ | ⟨digit⟩}
+<br>
+ ⟨int⟩ → [+|−] {⟨digit⟩}<sup>+</sup>
+<br>
+ ⟨float⟩ → [+|−] ( {⟨digit⟩}<sup>+</sup> "." {⟨digit⟩} &nbsp;|&nbsp; "." {⟨digit⟩}<sup>+</sup> )
+<br>
+ ⟨floatE⟩ → (⟨int⟩ | ⟨float⟩) (e|E) [+|−] {⟨digit⟩}<sup>+</sup>
+<br>
+ ⟨floatF⟩ → (⟨int⟩ | ⟨float⟩ | ⟨floatE⟩) ("f" | "F")
+<br>
+ ⟨add⟩ → +
+<br>
+ ⟨sub⟩ → −
+<br>
+ ⟨mul⟩ → *
+<br>
+ ⟨div⟩ → /
+<br>
+ ⟨lt⟩ → &lt;
+<br>
+ ⟨le⟩ → "&lt;="
+<br>
+ ⟨gt⟩ → &gt;
+<br>
+ ⟨ge⟩ → "&gt;="
+<br>
+ ⟨eq⟩ → =
+<br>
+ ⟨LParen⟩ → (
+<br>
+ ⟨RParen⟩ → )
+<br>
+ ⟨LBrace⟩ → {
+<br>
+ ⟨RBrace⟩ → }
+<br><br>
+
+⟨letter⟩ and ⟨digit⟩ are not token categories by themselves;
+rather, they are auxiliary categories to assist the definitions of the tokens
+⟨id⟩, ⟨int⟩, ⟨float⟩, ⟨floatE⟩, ⟨floatF⟩.
+
+<br><br>
+
+According to the above definitions,
+the integers and floating-point numbers may be signed with "+" or "−".
+Moreover, the integer or fractional part, but not both, of a string in ⟨float⟩ may be empty.
+
+
+The following is a DFA to accept the 18 token categories.
+
+<br><br>
+
+<center><img src="./CS 316 Project 1_files/DFASp20.svg" width="720"></center>
+
+<br>
+
+The objective of this project is to implement a lexical analyzer 
+that accepts the 18 token categories 
+<b>plus the following keywords, all in lowercase letters only</b>:
+
+<blockquote>
+if, then, else, or, and, not, pair, first, second, nil
+</blockquote>
+
+These keywords cannot be used as identifiers, but can be parts of identifiers,
+like "iff" and "delse".
+In this and the next three projects,
+<b>the identifiers and keywords are case-sensitive</b>.
+The implementation should be based on the above DFA.
+Your lexical analyzer program should clearly separate the driver and
+the state-transition function so that the driver will remain invariant and only
+state-transition functions will change from DFA to DFA.
+The enumerated or integer type is suggested for representation of states.
+
+<br><br>
+
+The following keyword recognition method is adequate for this project.
+
+<ol>
+<li>Create 10 additional DFA states for the keywords.
+</li><li>The DFA initially accepts the keywords as identifiers.
+</li><li>Each time the DFA accepts an identifier, check if it is one of the keywords,
+    and if so, move the DFA to the corresponding keyword state.
+</li></ol>
+
+The lexical analyzer program is to read an input text file,
+extract the tokens in it, and
+write them out one by one on separate lines.
+Each token should be flagged with its category.
+The output should be sent to an output text file.
+Whenever invalid tokens are found, 
+error messages should be printed, and the reading process should continue.
+
+<br><br>
+
+You may modify one of these 
+<a href="http://picasso.cs.qc.cuny.edu/cs316/lexSamples.html">sample Java programs</a>
+into your solution; if you do so, modify the comments suitably as well.
+
+<br><br>
+
+Here's a sample set of test input/output files:
+
+<blockquote>
+<a href="http://picasso.cs.qc.cuny.edu/cs316/t1.txt">in1</a> | <a href="http://picasso.cs.qc.cuny.edu/cs316/to1.txt">out1</a>
+<br>
+<a href="http://picasso.cs.qc.cuny.edu/cs316/t2.txt">in2</a> | <a href="http://picasso.cs.qc.cuny.edu/cs316/to2.txt">out2</a>
+<br>
+<a href="http://picasso.cs.qc.cuny.edu/cs316/t3.txt">in3</a> | <a href="http://picasso.cs.qc.cuny.edu/cs316/to3.txt">out3</a>
+<br>
+<a href="http://picasso.cs.qc.cuny.edu/cs316/t4.txt">in4</a> | <a href="http://picasso.cs.qc.cuny.edu/cs316/to4.txt">out4</a>
+<br>
+<a href="http://picasso.cs.qc.cuny.edu/cs316/t5.txt">in5</a> | <a href="http://picasso.cs.qc.cuny.edu/cs316/to5.txt">out5</a>
+<br>
+<a href="http://picasso.cs.qc.cuny.edu/cs316/t6.txt">in6</a> | <a href="http://picasso.cs.qc.cuny.edu/cs316/to6.txt">out6</a>
+<br>
+<a href="http://picasso.cs.qc.cuny.edu/cs316/t7.txt">in7</a> | <a href="http://picasso.cs.qc.cuny.edu/cs316/to7.txt">out7</a>
+</blockquote>
+
+Note that when the unexpected char is the newline char, the error message is displayed on the next line because
+my program, which is based on the sample lex analyzer, appends the newline char to the string read so far and displays it.
+You should make your own additional input files to test the program.
+
+<br><br>
+
+Since the purpose of this project is to reinforce, firsthand,
+the understanding of the internal mechanism of lexical analyzers built from
+finite automata as opposed to viewing them as black boxes, 
+you are <b>not</b> allowed to
+use any library functions/tools for lexical analysis
+(like the Java StringTokenizer).
+
+<br><br>
+
+To make grading efficient and uniform, observe the following:
+<ul>
+<li>
+The program must read the input/output file names as external arguments to the main function.
+<a href="http://picasso.cs.qc.cuny.edu/cs316/external-arguments.html">How to set external arguments to Java main function in Eclipse</a>.
+</li><li>
+If Java is used,
+the main function to be invoked to run the program must be included in <b>LexAnalyzer.java</b> class, and
+if a package is used, the package that includes <b>LexAnalyzer.java</b> must be named <b>cs316project</b>.
+</li></ul>
+
+The above token set is used for a small type-free functional language designed for our projects.
+Our project plan for the semester is to implement this language:
+a top-down parser in Project 2 and an interpreter in Project 3 and 4.
+
+<br><br>
+
+<b>Submission</b>
+<br><br>
+Your source program must be emailed to keitaro.yukawa@gmail.com with the subject header:
+
+<br><br>
+
+CS 316, Project 1, your full name
+
+<br><br>
+
+You may email the entire materials in a .zip or .rar compressed file.
+
+<br><br>
+
+The due date is 03/06/20, Friday, 11 PM.
+No late projects will be accepted.
+If you haven't been able to complete the project, you may send an incomplete program for partial credit.
+In this case, include a description of what is and is not working in your program along with what you
+believe to be the sources of the problems.
+
+
+
+</body></html>
